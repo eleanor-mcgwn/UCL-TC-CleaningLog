@@ -1,7 +1,7 @@
 <script>
   const user = new URLSearchParams(location.search).get("user");
   if (user) {
-    fetch("https://script.google.com/macros/s/AKfycby9JRIL50WmksziP3dRUR1mF5jR5e_MmlLbcxLUjLBSnwIAJIN-Kg6bOIj3OjGcqJjYvA/exec", {
+    fetch("https://corsproxy.io/?https://script.google.com/macros/s/AKfycbzJ8cEgGPzRNE_SdYvDvTXOtatrabx53EpRO2PQoGebp8bpf2vsb5fV5jK1Tp-IP3akQA/exec", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
