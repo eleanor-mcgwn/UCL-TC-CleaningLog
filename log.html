@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Cleaning Log</title>
+  </head>
+  <body>
+    <p>Logging cleaning event...</p>
+    <script>
+      const user = new URLSearchParams(location.search).get("user");
+      if (user) {
+        fetch("https://script.google.com/macros/s/10g-avndSICnQDfjsIuzcFUhiUb6lKHOGy3sXTvkPxyj05gVw0fTF2NfX/exec", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            user: user,
+            timestamp: new Date().toISOString()
+          })
+        })
+        .then(() => {
+          document.body.innerHTML = `<p>Cleaning logged for ${user}</p>`;
+        })
+        .catch(() => {
+          document.body.innerHTML = `<p>Failed to log cleaning</p>`;
+        });
+      } else {
+        document.body.innerHTML = `<p>No user ID found in URL</p>`;
+      }
+    </script>
+  </body>
+</html>
