@@ -44,29 +44,31 @@
     <tbody></tbody>
   </table>
 
-  <script>
-    const sheetID = "1uo-lERxlfUWTfKOFa5RPzELvwTwnYM3oFLQTNoYpTcM";
-    const sheetName = "Form Responses 1";
-    const url = `https://docs.google.com/spreadsheets/d/${sheetID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(sheetName)}`;
+<script>
+  const sheetID = "1uo-lERxlfUWTfKOFa5RPzELvwTwnYM3oFLQTNoYpTcM";
+  const sheetName = "Form Responses 1";
+  const url = `https://docs.google.com/spreadsheets/d/${sheetID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(sheetName)}`;
 
-    function formatTimestamp(rawValue) {
-      const date = new Date(rawValue);
-      if (isNaN(date.getTime())) return "Invalid date";
+  function formatTimestamp(rawValue) {
+    const date = new Date(rawValue);
+    if (isNaN(date.getTime())) return "Invalid date";
 
-      const day = String(date.getDate()).padStart(2, '0');
-      const month = date.toLocaleString('en-GB', { month: 'short' });
-      const year = String(date.getFullYear()).slice(-2);
-      const hours = String(date.getHours()).padStart(2, '0');
-      const mins = String(date.getMinutes()).padStart(2, '0');
-      return `${day}/${month}/${year} ${hours}:${mins}`;
-    }
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = date.toLocaleString('en-GB', { month: 'short' });
+    const year = String(date.getFullYear()).slice(-2);
+    const hours = String(date.getHours()).padStart(2, '0');
+    const mins = String(date.getMinutes()).padStart(2, '0');
+    return `${day}/${month}/${year} ${hours}:${mins}`;
+  }
 
+  function loadCleaningLog() {
     fetch(url)
       .then(res => res.text())
       .then(text => {
         const json = JSON.parse(text.substring(47).slice(0, -2));
         const rows = json.table.rows;
         const tbody = document.querySelector("#logTable tbody");
+        tbody.innerHTML = ""; // Clear existing
 
         rows.reverse().forEach(row => {
           const rawTimestamp = row.c[0]?.f || row.c[0]?.v || "";
@@ -82,8 +84,16 @@
         });
       })
       .catch(err => {
-        document.body.innerHTML = `<p>Error loading data: ${err.message}</p>`;
+        console.error("Error loading data:", err);
       });
-  </script>
+  }
+
+  // Load initially
+  loadCleaningLog();
+
+  // Refresh every 30 seconds (30000ms)
+  setInterval(loadCleaningLog, 30000);
+</script>
+
 </body>
 </html>
