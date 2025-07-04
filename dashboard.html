@@ -43,8 +43,8 @@
        <table id="logTable" class="table">
         <thead>
           <tr>
-            <th>User</th>
-            <th>Timestamp</th>
+            <th scope="col">User</th>
+            <th scope="col">Timestamp</th>
           </tr>
         </thead>
         <tbody></tbody>
@@ -86,8 +86,8 @@
 
           const tr = document.createElement("tr");
           tr.innerHTML = `
-            <td class="timestamp">${formatted}</td>
             <td>${user}</td>
+            <td class="timestamp">${formatted}</td>
           `;
           tbody.appendChild(tr);
         });
