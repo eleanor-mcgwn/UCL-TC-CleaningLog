@@ -17,7 +17,11 @@
             timestamp: new Date().toISOString()
           })
         })
-        .then(() => {
+        .then(response => {
+          if (!response.ok) throw new Error("Server error");
+          return response.text();
+        })
+        .then(text => {
           document.body.innerHTML = `<p>Cleaning logged for ${user}</p>`;
         })
         .catch(() => {
@@ -29,4 +33,3 @@
     </script>
   </body>
 </html>
-
