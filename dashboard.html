@@ -3,6 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <title>Tissue Culture Room Cleaning Log</title>
+  
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+
   <style>
     body {
       font-family: sans-serif;
@@ -33,16 +36,24 @@
   </style>
 </head>
 <body>
-  <h1>Tissue Culture Room Cleaning Log</h1>
-  <table id="logTable">
-    <thead>
-      <tr>
-        <th>Timestamp</th>
-        <th>User</th>
-      </tr>
-    </thead>
-    <tbody></tbody>
-  </table>
+  <h1>Tissue Culture Dashboard</h1>
+  <div class = "card">
+    <div class="card-header">
+    General Cleaning Log
+    </div>
+    <div class="card-body">
+       <table id="logTable">
+        <thead>
+          <tr>
+            <th>User</th>
+            <th>Timestamp</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+      
+  </div>
 
 <script>
   const sheetID = "1uo-lERxlfUWTfKOFa5RPzELvwTwnYM3oFLQTNoYpTcM";
