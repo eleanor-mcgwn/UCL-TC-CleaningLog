@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Tissue Culture Room Cleaning Log</title>
+  <title>TissueCultureRoom Cleaning Log</title>
   <style>
     body {
       font-family: sans-serif;
@@ -49,6 +49,17 @@
     const sheetName = "Form Responses 1";
     const url = `https://docs.google.com/spreadsheets/d/${sheetID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(sheetName)}`;
 
+    // Format timestamp: dd/mmm/yy HH:MM
+    function formatTimestamp(isoString) {
+      const date = new Date(isoString);
+      const day = String(date.getDate()).padStart(2, '0');
+      const month = date.toLocaleString('en-GB', { month: 'short' });
+      const year = String(date.getFullYear()).slice(-2);
+      const hours = String(date.getHours()).padStart(2, '0');
+      const mins = String(date.getMinutes()).padStart(2, '0');
+      return `${day}/${month}/${year} ${hours}:${mins}`;
+    }
+
     fetch(url)
       .then(res => res.text())
       .then(text => {
@@ -57,12 +68,13 @@
         const tbody = document.querySelector("#logTable tbody");
 
         rows.reverse().forEach(row => {
-          const timestamp = row.c[0]?.v || "";
+          const rawTimestamp = row.c[0]?.v || "";
+          const formatted = rawTimestamp ? formatTimestamp(rawTimestamp) : "—";
           const user = row.c[1]?.v || "—";
 
           const tr = document.createElement("tr");
           tr.innerHTML = `
-            <td class="timestamp">${timestamp}</td>
+            <td class="timestamp">${formatted}</td>
             <td>${user}</td>
           `;
           tbody.appendChild(tr);
