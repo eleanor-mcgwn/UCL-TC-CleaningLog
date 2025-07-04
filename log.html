@@ -1,35 +1,27 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="UTF-8">
-    <title>Cleaning Log</title>
-  </head>
-  <body>
-    <p>Logging cleaning event...</p>
-    <script>
-      const user = new URLSearchParams(location.search).get("user");
-      if (user) {
-        fetch("https://script.google.com/macros/s/AKfycbzJ8cEgGPzRNE_SdYvDvTXOtatrabx53EpRO2PQoGebp8bpf2vsb5fV5jK1Tp-IP3akQA/exec", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            user: user,
-            timestamp: new Date().toISOString()
-          })
-        })
-        .then(response => {
-          if (!response.ok) throw new Error("Server error");
-          return response.text();
-        })
-        .then(text => {
-          document.body.innerHTML = `<p>Cleaning logged for ${user}</p>`;
-        })
-        .catch(() => {
-          document.body.innerHTML = `<p>Failed to log cleaning</p>`;
-        });
-      } else {
-        document.body.innerHTML = `<p>No user ID found in URL</p>`;
+<script>
+  const user = new URLSearchParams(location.search).get("user");
+  if (user) {
+    fetch("https://script.google.com/macros/s/AKfycbzJ8cEgGPzRNE_SdYvDvTXOtatrabx53EpRO2PQoGebp8bpf2vsb5fV5jK1Tp-IP3akQA/exec", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        user: user,
+        timestamp: new Date().toISOString()
+      })
+    })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`Server responded with status ${response.status}`);
       }
-    </script>
-  </body>
-</html>
+      return response.text();
+    })
+    .then(text => {
+      document.body.innerHTML = `<p>Cleaning logged for ${user} (${text})</p>`;
+    })
+    .catch(error => {
+      document.body.innerHTML = `<p>Failed to log cleaning. Error: ${error.message}</p>`;
+    });
+  } else {
+    document.body.innerHTML = `<p>No user ID found in URL</p>`;
+  }
+</script>
