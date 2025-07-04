@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Logging Cleaning...</title>
+  </head>
+  <body>
+    <p>Logging cleaning automatically...</p>
+    <form id="logForm" action="https://docs.google.com/forms/d/e/1FAIpQLSdegj3X7TRaAqKGxN0Ip9b-bNA8bVsG9loPCV19YF-bXGey3g/formResponse" method="POST">
+      <input type="hidden" name="entry.843788272" id="userField">
+    </form>
+
+    <script>
+      const user = new URLSearchParams(window.location.search).get("user");
+      if (user) {
+        document.getElementById("userField").value = user;
+        document.getElementById("logForm").submit();
+      } else {
+        document.body.innerHTML = "<p>Error: No user in URL</p>";
+      }
+    </script>
+  </body>
+</html>
